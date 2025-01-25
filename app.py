@@ -17,3 +17,16 @@ faq_pairs = [
     (r"(.*)", ['I am sorry, I did not understand that. Can you please rephrase your question?'])
 ]
 
+# Create a chatbot using the predefined responses and reflections
+# The reflections dictionary allows the chatbot to respond with pronouns based on the user input
+chatbot = Chat(faq_pairs, reflections)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/ask', methods=['POST'])
+def ask():
+    user_message = request.form['user_message']
+    chatbot_response = chatbot.respond(user_message)
+    return chatbot_response
