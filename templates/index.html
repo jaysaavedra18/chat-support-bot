@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Support Bot</title>
+    <link rel="stylesheet" href="static/styles.css" />
+  </head>
+</html>
+<body>
+  <div class="chat-box">
+    <div id="chat" class="chat-area">
+      <div class="bot-message">Hello! How can I assist you today?</div>
+    </div>
+    <div>
+      <input
+        type="text"
+        id="user_input"
+        class="user-input"
+        placeholder="Ask me anything..."
+      />
+      <button id="send_btn" class="send-button">Send</button>
+    </div>
+  </div>
+  <script>
+    document.getElementById("send_btn").onclick = function () {
+      var user_input = document.getElementById("user_input").value;
+      var chat = document.getElementById("chat");
+
+      if (user_input) {
+        var user_message = document.createElement("div");
+        user_message.classList.add("user-message");
+        user_message.innerText = "You: " + user_input;
+        chat.appendChild(user_message);
+        document.getElementById("user_input").value = "";
+
+        // Send user input to Flask server
+        fetch("/ask", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: "user_input=" + encodeURIComponent(user_input),
+        })
+          .then((response) => response.text())
+          .then((data) => {
+            // Add bot response to chat area
+            var bot_message = document.createElement("div");
+            bot_message.classList.add("bot-message");
+            bot_message.innerText = "Bot: " + data;
+            chat.appendChild(bot_message);
+
+            // Scroll to the bottom of the chat area
+            chat.scrollTop = chat.scrollHeight;
+          });
+      }
+    };
+  </script>
+</body>
