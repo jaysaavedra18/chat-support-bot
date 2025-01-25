@@ -27,8 +27,8 @@ def home():
 
 @app.route('/ask', methods=['POST'])
 def ask():
-    user_message = request.form['user_message']
-    chatbot_response = chatbot.respond(user_message)
+    user_input = request.form['user_input']
+    chatbot_response = chatbot.respond(user_input)
     return chatbot_response
 
 if __name__ == '__main__':
