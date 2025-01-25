@@ -30,3 +30,6 @@ def ask():
     user_message = request.form['user_message']
     chatbot_response = chatbot.respond(user_message)
     return chatbot_response
+
+if __name__ == '__main__':
+    app.run(debug=True)
