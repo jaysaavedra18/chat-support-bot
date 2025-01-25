@@ -4,7 +4,8 @@ from nltk.chat.util import Chat, reflections
 
 app = Flask(__name__)
 
-# Predefined responses (FAQs) for the chatbot
+# Predefined responses (FAQs) for the chatbot to use to answer user questions
+# Pairs allow the chatbot to respond to user input based on the regular expression pattern
 faq_pairs = [
     (r'hi|hello|hey', ['Hello! How can I help you today?']),
     (r'what is your name?', ['I am your friendly neighborhood chatbot, here to assist you!']),
